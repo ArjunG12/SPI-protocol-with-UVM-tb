@@ -27,13 +27,13 @@ module spi_rx_shift_reg (
             counter        <= 6'd0;
         end
         else begin
-            mosi_frame_out <= {mosi_frame_out[46:0], pi_mosi};
+            mosi_frame_out[46-counter] <= pi_mosi;
             if (counter < 6'd49) begin
                 counter <= counter + 6'd1;
             end
         end
     end
-
+    
     // NOTE: These use counter == 47 (not 48) because all posedge pi_sck
     // blocks read the OLD (pre-update) counter value due to non-blocking
     // assignments. At the 48th SCK edge, the old counter is 47.
@@ -54,13 +54,14 @@ module spi_rx_shift_reg (
             frame_err_held    <= 1'b0;
         end
         else if (rx_done_pulse) begin
-            mosi_payload_held <= {mosi_frame_out[46:0], pi_mosi};
+            
             rx_done_held      <= 1'b1;
             frame_err_held    <= 1'b0;
         end
         else if (frame_err) begin
             frame_err_held    <= 1'b1;
         end
+        mosi_payload_held <= {mosi_frame_out[46:0], pi_mosi};
     end
 
 endmodule
