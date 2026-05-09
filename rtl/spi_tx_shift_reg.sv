@@ -6,7 +6,7 @@ module spi_tx_shift_reg (
     output logic       po_miso,
     output logic       po_miso_oe
 );
-
+    logic       po_miso_r;
     logic       spi_rst_n;
     logic [5:0] bit_index;
 
@@ -16,12 +16,17 @@ module spi_tx_shift_reg (
     always_ff @(negedge pi_sck or negedge spi_rst_n) begin
         if (!spi_rst_n) begin
             bit_index <= 6'd47;
+            po_miso_r  <= miso_frame_in[47];
         end
-        else if (bit_index > 6'd0) begin
-            bit_index <= bit_index - 6'd1;
+        else 
+        begin
+             po_miso_r <= miso_frame_in[bit_index]; 
+            if (bit_index > 6'd0) begin
+                bit_index <= bit_index - 6'd1;
+            end
         end
     end
 
-    assign po_miso = miso_frame_in[bit_index];
+    assign po_miso = po_miso_r;
 
 endmodule
