@@ -137,7 +137,10 @@ module spi_slave_top (
         .rc                 (rc),
         .reg_write_en       (reg_write_en)
     );
-
+    logic v_bit_prev;
+    always@(negedge pi_csn)begin
+        v_bit_prev<=v_bit;
+    end
     // -------------------------------------------------------------------------
     // 6. Register Map (System Domain)
     // -------------------------------------------------------------------------
@@ -158,7 +161,7 @@ module spi_slave_top (
     //    Feed the upper 42 bits BEFORE CRC is appended to break
     //    the circular dependency.
     // -------------------------------------------------------------------------
-    assign tx_data_no_crc = {4'd0, ff, v_bit, rc, reg_read_data};
+    assign tx_data_no_crc = {4'd0, ff, v_bit_prev, rc, reg_read_data};
 
     spi_crc_generator u_crc_gen (
         .tx_data_no_crc (tx_data_no_crc),
@@ -170,7 +173,7 @@ module spi_slave_top (
     // -------------------------------------------------------------------------
     spi_tx_formatter u_tx_formatter (
         .ff             (ff),
-        .v              (v_bit),
+        .v              (v_bit_prev),
         .rc             (rc),
         .reg_read_data  (reg_read_data),
         .tx_crc         (tx_crc),
