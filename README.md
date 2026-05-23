@@ -103,7 +103,8 @@ This confirms that the current write/read smoke test is passing.
 
 The simulation waveform was also checked. Add the waveform screenshot to the repository and update the image path below if needed.
 
-<img width="2396" height="229" alt="image" src="https://github.com/user-attachments/assets/524c94a3-1a35-47f8-9da0-b49bc7b9583c" />
+<img width="2381" height="223" alt="image" src="https://github.com/user-attachments/assets/96815e23-0fb1-42bf-81f9-04a5caf00e0a" />
+
 
 ## Notes
 
