@@ -24,6 +24,7 @@ SPI_project/
   tb/
     tb_top.sv
     spi_seq_item.sv
+    spi_sequencer.sv
     spi_driver.sv
     spi_monitor.sv
     spi_scoreboard.sv
