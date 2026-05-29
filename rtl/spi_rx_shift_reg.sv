@@ -27,7 +27,7 @@ module spi_rx_shift_reg (
             counter        <= 6'd0;
         end
         else begin
-            mosi_frame_out[46-counter] <= pi_mosi;
+            mosi_frame_out[47-counter] <= pi_mosi;
             if (counter < 6'd49) begin
                 counter <= counter + 6'd1;
             end
@@ -61,7 +61,7 @@ module spi_rx_shift_reg (
         else if (frame_err) begin
             frame_err_held    <= 1'b1;
         end
-        mosi_payload_held <= {mosi_frame_out[46:0], pi_mosi};
+        mosi_payload_held <= {mosi_frame_out[47:1], pi_mosi};
     end
 
 endmodule
